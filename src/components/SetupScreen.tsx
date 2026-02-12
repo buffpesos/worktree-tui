@@ -4,6 +4,7 @@ import { createUmbrella, listUntrackedFiles, copyToShared, symlinkFromShared } f
 import { FileSelector } from "./FileSelector.tsx"
 import { App } from "../App.tsx"
 import { basename, dirname, resolve, join } from "path"
+import { homedir } from "os"
 
 type SetupMode =
   | { kind: "from-repo"; remote: string; repoRoot: string }
@@ -169,7 +170,7 @@ export function SetupScreen({ mode }: SetupScreenProps) {
           onConfirm={handleFileSelection}
           onSkip={() => setPhase("done")}
         />
-        <text fg="#414868">{`Selected files are copied to ${join(umbrellaDir, ".shared")}/`}</text>
+        <text fg="#414868">{`Selected files are copied to ${join(umbrellaDir, ".shared").replace(homedir(), "~")}/`}</text>
         <text fg="#414868">{"and symlinked into each worktree. Future worktrees will"}</text>
         <text fg="#414868">{"also get these symlinks automatically."}</text>
       </box>
@@ -237,7 +238,7 @@ export function SetupScreen({ mode }: SetupScreenProps) {
           </box>
         </box>
         <text>{""}</text>
-        <text fg="#565f89">{`Location: ${umbrellaDir}`}</text>
+        <text fg="#565f89">{`Location: ${umbrellaDir.replace(homedir(), "~")}`}</text>
         <text>{""}</text>
         <text fg="#565f89">{`Source: ${remote}`}</text>
         <text>{""}</text>

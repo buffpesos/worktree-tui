@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useKeyboard } from "@opentui/react"
+import { homedir } from "os"
 import { useWorktrees } from "../hooks/useGit.ts"
 
 interface WorktreeListProps {
@@ -92,7 +93,7 @@ export function WorktreeList({ focused, onStatus, onOpen }: WorktreeListProps) {
     const status = wt.detached ? " [detached]" : ""
     return {
       name: `${wt.branch || "(no branch)"}${status}`,
-      description: `${wt.path}  ${wt.head.slice(0, 8)}`,
+      description: `${wt.path.replace(homedir(), "~")}  ${wt.head.slice(0, 8)}`,
       value: wt.path,
     }
   })
@@ -119,7 +120,7 @@ export function WorktreeList({ focused, onStatus, onOpen }: WorktreeListProps) {
           </box>
           <box flexDirection="row" gap={1}>
             <text fg="#565f89">{"Path:"}</text>
-            <text fg="#a9b1d6">{confirmAction.path}</text>
+            <text fg="#a9b1d6">{confirmAction.path.replace(homedir(), "~")}</text>
           </box>
         </box>
         <box flexDirection="column" paddingLeft={1}>

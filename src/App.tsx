@@ -6,6 +6,7 @@ import { WorktreeList, WORKTREE_SHORTCUTS } from "./components/WorktreeList.tsx"
 import { AddWorktree, ADD_SHORTCUTS } from "./components/AddWorktree.tsx"
 import { HelpView, HELP_SHORTCUTS } from "./components/HelpView.tsx"
 import { basename } from "path"
+import { homedir } from "os"
 
 const TABS = ["Worktrees", "Add", "Help"]
 const TAB_SHORTCUTS = [
@@ -46,7 +47,7 @@ export function App({ umbrellaRoot }: AppProps) {
       "-e", `  end tell`,
       "-e", `end tell`,
     ])
-    setStatusMessage(`Opened iTerm2 in ${worktreePath}`)
+    setStatusMessage(`Opened iTerm2 in ${worktreePath.replace(homedir(), "~")}`)
   }
 
   const repoLabel = basename(umbrellaRoot)
